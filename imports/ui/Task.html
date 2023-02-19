@@ -1,0 +1,22 @@
+<template name="task">
+  <li class="flex justify-between items-center">
+    <div class="w-[55%]">
+      <input
+        type="checkbox"
+        checked="{{isChecked}}"
+        class="toggle-checked cursor-pointer"
+      />
+      <span>{{ctx.text}}</span>
+    </div>
+
+    <div class="w-[35%]">
+      {{renderReactComponent AddToProject projects=projects task=ctx }}
+    </div>
+
+    <button
+      class="delete cursor-pointer bg-red-600 font-bold hover:bg-red-700 px-2 rounded-md"
+    >
+      &times;
+    </button>
+  </li>
+</template>

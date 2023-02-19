@@ -1,0 +1,65 @@
+<body>
+  {{> mainContainer }}
+</body>
+
+<template name="mainContainer">
+  <div class="app bg-black min-h-screen text-white font-mono">
+    <header class="bg-[#151717] py-6 relative">
+      <h1 class="text-center font-semibold text-2xl">
+        📝️ To Do List {{incompleteCount}}
+      </h1>
+      {{#if isUserLogged}}
+      <div
+        class="absolute right-4 -translate-y-1/2 top-1/2 flex items-center gap-5"
+      >
+        <p>{{getUser.username}}</p>
+        <button
+          class="logout cursor-pointer gradient-button py-1 px-3 rounded-lg shadow-lg hover:bg-gray-900"
+        >
+          Logout
+        </button>
+      </div>
+      {{/if}}
+    </header>
+
+    <div class="main p-10">
+      {{#if isUserLogged}} {{> form }}
+
+      <div class="filter flex justify-center my-10">
+        <button id="hide-completed-button" class="gradient-button">
+          {{#if hideCompleted}} Show All {{else}} Hide Completed {{/if}}
+        </button>
+      </div>
+
+      {{#if isTasksLoading}}
+      <div class="loading">loading...</div>
+      {{/if}}
+
+      <div class="mb-16">
+        {{renderReactComponent ProjectsCount projects=projects
+        isProjectsLoading=isProjectsLoading
+        projectsCountInTasks=projectsCountInTasks }}
+      </div>
+
+      <ul class="tasks flex flex-col gap-5">
+        {{#each tasks}} {{> task ctx=this projects=projects }} {{/each}}
+      </ul>
+
+      {{else}} {{> login }} {{/if}}
+    </div>
+  </div>
+</template>
+
+<template name="form">
+  <form class="task-form w-full flex justify-center gap-5">
+    <input
+      class="dark-input w-1/3"
+      type="text"
+      name="text"
+      placeholder="Type to add new tasks"
+    />
+    <div class="gradient-button">
+      <button type="submit">Add Task</button>
+    </div>
+  </form>
+</template>
